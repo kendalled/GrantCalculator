@@ -1,25 +1,42 @@
 # Grant's Cost Calculator Tool
 
-base_pin = 3.00
-base_coin = 3.50
-base_chain = 3.24
+coins =	{
+  3.0 : 6.37,
+  2.75 : 5.66,
+  2.5 : 4.95,
+  2.25 : 4.37,
+  2.0 : 3.52,
+  1.75 : 3.22,
+  1.5 : 2.96,
+}
+
+# Resets Vars
 qty = 0
 res = 0
 
+# Support for Multiple Items
 option = input("Type pin, coin, or keychain and press enter: ")
 
-if(option == "pin"):
-    qty = int(input("\nEnter your desired pin quantity, 100 - 1000: "))
-    res = qty * base_pin
-    
-elif(option == "coin"):
-    qty = int(input("\nEnter your desired coin quantity, 100 - 1000: "))
-    res = qty * base_coin
+if(option == "coin"):
+    # Base Price Based on Size
+    base_price = coins.get(float(input("\nEnter your desired size, 1.5 - 3.0 (inches): ")))
 
-else:
-    qty = int(input("\nEnter your desired keychain quantity, 100 - 1000: "))
-    res = qty * base_chain
+    # Plating Calculation
+    plating = input("Dual Plated? Yes or No: ")
+    if(plating == "yes" or plating == "Yes"):
+        base_price += .30
+        
+    # Custom Edge Calculation
+    edge = input("Custom Edge? Yes or No: ")
+    if(edge == "yes" or edge == "Yes"):
+        base_price += .70
+        
+    # Quantity Calculation
+    qty = int(input("\nEnter your desired quantity, 100 or more: "))
 
+    # Final Cost
+    res = qty * base_price
 
-
-print("Your quote is: {}".format(res))
+# Print Out to User
+print("-------------------------------")
+print("Your quote is: ${}".format(res))
